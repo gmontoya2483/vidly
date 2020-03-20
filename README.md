@@ -1,0 +1,3 @@
+# Vidly
+
+Movies Restful API.
