@@ -1,21 +1,6 @@
-const Joi = require('@hapi/joi');
-const mongoose = require('mongoose');
+const { Genre, validate} = require('../models/genres.model');
 const express = require('express');
 const router = express.Router();
-
-
-//Genre Model Class
-const Genre = mongoose.model('Genre', new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 50
-    }
-}));
-
-
-
 
 
 router.get('/', async (req, res) => {
@@ -32,7 +17,7 @@ router.get('/:id', async(req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const result = validateGenre(req.body);
+    const result = validate(req.body);
     if  (result.error) return res.status(400)
         .send({message: result.error.details[0].message.replace(/['"]+/g, "")});
 
@@ -42,7 +27,7 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async(req, res) => {
-    const result = validateGenre(req.body);
+    const result = validate(req.body);
     if (result.error) return res.status(400)
         .send({message: (result.error.details[0].message).replace(/['"]+/g, "")});
 
@@ -57,16 +42,5 @@ router.delete('/:id', async (req, res) => {
     if (!genre) return res.status(404).send({message: "404 - Not found"});
     res.send(genre);
 });
-
-function validateGenre(genre) {
-    const schema = Joi.object().keys({
-        name: Joi.string()
-            .min(5)
-            .max(55)
-            .required()
-    });
-    return schema.validate(genre);
-}
-
 
 module.exports = router;

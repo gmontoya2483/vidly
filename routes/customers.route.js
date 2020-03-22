@@ -1,27 +1,6 @@
-const Joi = require('@hapi/joi');
-const mongoose = require('mongoose');
+const { Customer, validate } = require('../models/customers.model');
 const express = require('express');
 const router = express.Router();
-
-//Genre Model Class
-const Customer = mongoose.model('Customer', new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 50
-    },
-    isGold: {
-        type: Boolean,
-        default: false
-    },
-    phone: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 50
-    }
-}));
 
 
 router.get('/', async (req, res) => {
@@ -38,7 +17,7 @@ router.get('/:id', async(req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const result = validateCustomer(req.body);
+    const result = validate(req.body);
     if  (result.error) return res.status(400)
         .send({message: result.error.details[0].message.replace(/['"]+/g, "")});
 
@@ -55,7 +34,7 @@ router.put('/:id', async(req, res) => {
     //TODO: Refactor this method in order to get and keep the isGold value from the database in case it not part of the
     // parameters within the body
 
-    const result = validateCustomer(req.body);
+    const result = validate(req.body);
     if (result.error) return res.status(400)
         .send({message: (result.error.details[0].message).replace(/['"]+/g, "")});
 
@@ -76,15 +55,5 @@ router.delete('/:id', async (req, res) => {
     res.send(customer);
 });
 
-
-function validateCustomer(customer) {
-    const schema = Joi.object({
-        name: Joi.string().min(5).max(50).required(),
-        isGold: Joi.boolean(),
-        phone: Joi.string().required().min(5).max(50)
-    });
-    return schema.validate(customer);
-
-}
 
 module.exports = router;
