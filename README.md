@@ -66,3 +66,14 @@ name: {
         dailyRentalRate: Joi.number().min(0).max(255).required()
     }
 ```
+
+### rentals
+
++ /api/movies (get, post)
+
+```javascript
+    {
+        customerId: Joi.string().required(),
+        movieId: Joi.string().required()
+    }
+```
