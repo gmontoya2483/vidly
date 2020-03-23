@@ -21,8 +21,8 @@ router.post('/', async (req, res) => {
     if  (result.error) return res.status(400)
         .send({message: result.error.details[0].message.replace(/['"]+/g, "")});
 
-    let genre = new Genre({name: req.body.name});
-    genre = await genre.save();
+    const genre = new Genre({name: req.body.name});
+    await genre.save();
     res.send(genre);
 });
 
