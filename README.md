@@ -53,4 +53,27 @@ name: {
 
 ```
 
+### movies
 
++ /api/movies (get, post)
++ /api/movies/:id (get, put, delete)
+
+```javascript
+    {
+        title: Joi.string().min(5).max(255).required(),
+        genreId: Joi.string().required(),
+        numberInStock: Joi.number().min(0).max(255).required(),
+        dailyRentalRate: Joi.number().min(0).max(255).required()
+    }
+```
+
+### rentals
+
++ /api/movies (get, post)
+
+```javascript
+    {
+        customerId: Joi.string().required(),
+        movieId: Joi.string().required()
+    }
+```
