@@ -16,13 +16,11 @@ Movies Restful API.
 
 ```javascript
 {
-name: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 50
+        name: Joi.string()
+            .min(5)
+            .max(55)
+            .required()
     }
-}
 ```
 
 
@@ -32,24 +30,11 @@ name: {
 + /api/customers/:id (get, put, delete)
 
 ```javascript
-{
-    name: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 50
-    },
-    isGold: {
-        type: Boolean,
-        default: false
-    },
-    phone: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 50
+    {
+        name: Joi.string().min(5).max(50).required(),
+        isGold: Joi.boolean(),
+        phone: Joi.string().required().min(5).max(50)
     }
-}
 
 ```
 
@@ -59,12 +44,12 @@ name: {
 + /api/movies/:id (get, put, delete)
 
 ```javascript
-    {
-        title: Joi.string().min(5).max(255).required(),
-        genreId: Joi.string().required(),
-        numberInStock: Joi.number().min(0).max(255).required(),
-        dailyRentalRate: Joi.number().min(0).max(255).required()
-    }
+        {
+            title: Joi.string().min(5).max(255).required(),
+            genreId: Joi.objectId().required(),
+            numberInStock: Joi.number().min(0).max(255).required(),
+            dailyRentalRate: Joi.number().min(0).max(255).required()
+        }
 ```
 
 ### rentals
@@ -72,8 +57,8 @@ name: {
 + /api/movies (get, post)
 
 ```javascript
-    {
-        customerId: Joi.string().required(),
-        movieId: Joi.string().required()
-    }
+        {
+            customerId: Joi.objectId().required(),
+            movieId: Joi.objectId().required()
+        }
 ```
