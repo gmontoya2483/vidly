@@ -16,6 +16,8 @@
     "express": "^4.17.1",
     "fawn": "^2.1.5",
     "joi-objectid": "^3.0.1",
+    "joi-password-complexity": "^4.1.0",
+    "lodash": "^4.17.15",
     "mongoose": "^5.9.5"
   },
   "devDependencies": {

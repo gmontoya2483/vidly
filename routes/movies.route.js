@@ -39,8 +39,6 @@ router.get('/:id', async(req, res) => {
 });
 
 router.put('/:id', async(req, res) => {
-    //TODO: Refactor this method in order to get and keep the isGold value from the database in case it not part of the
-    // parameters within the body
 
     const result = validate(req.body);
     if (result.error) return res.status(400)
