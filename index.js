@@ -6,6 +6,7 @@ const customers = require('./routes/customers.route');
 const movies = require('./routes/movies.route');
 const rentals = require('./routes/rentals.route');
 const users = require('./routes/users.route');
+const auth = require('./routes/auth.route');
 const express = require('express');
 const app = express();
 
@@ -18,14 +19,13 @@ mongoose.connect('mongodb://localhost/vidly',
     .catch(err => console.error('Could not connect to MongoDB', err));
 
 
-
 app.use(express.json());
 app.use('/api/genres', genres);
 app.use('/api/customers', customers);
 app.use('/api/movies', movies);
 app.use('/api/rentals', rentals);
 app.use('/api/users', users);
-
+app.use('/api/auth', auth);
 
 
 //PORT
