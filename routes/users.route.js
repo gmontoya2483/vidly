@@ -1,9 +1,18 @@
+const auth = require('../middleware/auth.middleware');
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const { User, validate } = require('../models/users.model');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
+
+router.get('/me', auth, async (req, res) => {
+    const user = await User.findById(req.user._id).select({password: 0});
+    if(!user) {
+        return res.status(404).send({message: "404 - Not found"});
+    }
+    res.send(user);
+});
 
 router.post('/', async (req, res) => {
     const result = validate(req.body);
