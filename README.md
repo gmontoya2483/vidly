@@ -5,6 +5,12 @@ Movies Restful API.
 ### install
 ``npm init``
 
+### Run in Dev
+```
+> SET vidly_jwtPrivateKey=<ANY KEY> 
+> nodemon
+```
+
 ### Endpoints
 
 #### genres
@@ -61,4 +67,29 @@ Movies Restful API.
             customerId: Joi.objectId().required(),
             movieId: Joi.objectId().required()
         }
+
+
+### users
++ /api/users (post)
++ /api/users/me (get)
+```javascript
+    {
+        name: Joi.string().min(5).max(50).required(),
+        email: Joi.string().min(5).max(255).required().email(),
+        password: passwordComplexity(passwordComplexityOptions).required(),
+        isAdmin: Joi.boolean()
+    }
 ```
+
+### auth
+
++ /api/users (post)
+
+```javascript
+    {
+        email: Joi.string().min(5).max(255).required().email(),
+        password: Joi.string().required()
+    }
+```
+
+

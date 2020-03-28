@@ -1,3 +1,5 @@
+const auth = require('../middleware/auth.middleware');
+const admin = require('../middleware/admin.middleware');
 const { Movie, validate } = require('../models/movies.model');
 const { Genre } = require('../models/genres.model');
 const express = require('express');
@@ -9,7 +11,7 @@ router.get('/', async (req, res) => {
 });
 
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const result = validate(req.body);
     if  (result.error) return res.status(400)
         .send({message: result.error.details[0].message.replace(/['"]+/g, "")});
@@ -38,9 +40,7 @@ router.get('/:id', async(req, res) => {
     res.send(movie);
 });
 
-router.put('/:id', async(req, res) => {
-    //TODO: Refactor this method in order to get and keep the isGold value from the database in case it not part of the
-    // parameters within the body
+router.put('/:id', auth, async(req, res) => {
 
     const result = validate(req.body);
     if (result.error) return res.status(400)
@@ -67,7 +67,7 @@ router.put('/:id', async(req, res) => {
     res.send(movie);
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', [auth, admin], async (req, res) => {
     const movie = await Movie.findByIdAndDelete(req.params.id);
     if (!movie) return res.status(404).send({message: "404 - Not found"});
     res.send(movie);

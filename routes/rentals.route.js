@@ -1,3 +1,4 @@
+const auth = require('../middleware/auth.middleware');
 const { Movie } = require('../models/movies.model');
 const { Customer } = require('../models/customers.model');
 const { Rental, validate } = require('../models/rentals.model');
@@ -17,7 +18,7 @@ router.get('/', async (req, res) => {
     res.send(rentals);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const result = validate(req.body);
     if  (result.error) return res.status(400)
         .send({message: result.error.details[0].message.replace(/['"]+/g, "")});
