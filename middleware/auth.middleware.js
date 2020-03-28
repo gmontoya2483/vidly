@@ -12,4 +12,4 @@ module.exports = async function auth  (req, res, next){
     } catch (e) {
         res.status(400).send({message: "Invalid token."});
     }
-}
+};

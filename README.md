@@ -5,6 +5,12 @@ Movies Restful API.
 ### install
 ``npm init``
 
+### Run in Dev
+```
+> SET vidly_jwtPrivateKey=<ANY KEY> 
+> nodemon
+```
+
 ### Endpoints
 
 #### genres
@@ -16,13 +22,11 @@ Movies Restful API.
 
 ```javascript
 {
-name: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 50
+        name: Joi.string()
+            .min(5)
+            .max(55)
+            .required()
     }
-}
 ```
 
 
@@ -32,24 +36,11 @@ name: {
 + /api/customers/:id (get, put, delete)
 
 ```javascript
-{
-    name: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 50
-    },
-    isGold: {
-        type: Boolean,
-        default: false
-    },
-    phone: {
-        type: String,
-        required: true,
-        minlength: 5,
-        maxlength: 50
+    {
+        name: Joi.string().min(5).max(50).required(),
+        isGold: Joi.boolean(),
+        phone: Joi.string().required().min(5).max(50)
     }
-}
 
 ```
 
@@ -59,12 +50,12 @@ name: {
 + /api/movies/:id (get, put, delete)
 
 ```javascript
-    {
-        title: Joi.string().min(5).max(255).required(),
-        genreId: Joi.string().required(),
-        numberInStock: Joi.number().min(0).max(255).required(),
-        dailyRentalRate: Joi.number().min(0).max(255).required()
-    }
+        {
+            title: Joi.string().min(5).max(255).required(),
+            genreId: Joi.objectId().required(),
+            numberInStock: Joi.number().min(0).max(255).required(),
+            dailyRentalRate: Joi.number().min(0).max(255).required()
+        }
 ```
 
 ### rentals
@@ -72,8 +63,33 @@ name: {
 + /api/movies (get, post)
 
 ```javascript
+        {
+            customerId: Joi.objectId().required(),
+            movieId: Joi.objectId().required()
+        }
+```
+
+### users
++ /api/users (post)
++ /api/users/me (get)
+```javascript
     {
-        customerId: Joi.string().required(),
-        movieId: Joi.string().required()
+        name: Joi.string().min(5).max(50).required(),
+        email: Joi.string().min(5).max(255).required().email(),
+        password: passwordComplexity(passwordComplexityOptions).required(),
+        isAdmin: Joi.boolean()
     }
 ```
+
+### auth
+
++ /api/users (post)
+
+```javascript
+    {
+        email: Joi.string().min(5).max(255).required().email(),
+        password: Joi.string().required()
+    }
+```
+
+

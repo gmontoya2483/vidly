@@ -1,4 +1,5 @@
 const auth = require('../middleware/auth.middleware');
+const admin = require('../middleware/admin.middleware');
 const { Customer, validate } = require('../models/customers.model');
 const express = require('express');
 const router = express.Router();
@@ -51,7 +52,7 @@ router.put('/:id', auth, async(req, res) => {
 });
 
 
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', [auth, admin], async (req, res) => {
     const customer = await Customer.findByIdAndDelete(req.params.id);
     if (!customer) return res.status(404).send({message: "404 - Not found"});
     res.send(customer);
