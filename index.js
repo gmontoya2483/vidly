@@ -1,3 +1,4 @@
+const error = require('./middleware/error.middleware');
 const config = require('config');
 const Joi = require('@hapi/joi');
 Joi.objectId = require('joi-objectid')(Joi);
@@ -34,6 +35,8 @@ app.use('/api/movies', movies);
 app.use('/api/rentals', rentals);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
+
+app.use(error);
 
 
 //PORT
