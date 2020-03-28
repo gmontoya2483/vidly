@@ -67,7 +67,7 @@ Movies Restful API.
             customerId: Joi.objectId().required(),
             movieId: Joi.objectId().required()
         }
-```
+
 
 ### users
 + /api/users (post)
