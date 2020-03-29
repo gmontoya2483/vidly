@@ -1,5 +1,5 @@
 
-const logger = require('../logger');
+const logger = require('../startup/logger.startup');
 
 module.exports = async function(err, req, res,next){
     logger.log('error', err.message, {metadata: err });
