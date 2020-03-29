@@ -13,12 +13,12 @@ const auth = require('./routes/auth.route');
 const express = require('express');
 const app = express();
 
+
 //Verify if the jwtPrivateKey envVariable exists
 if (!config.get('jwtPrivateKey')){
     console.error('FATAL ERROR: jwtPrivateKey is not defined.');
-    process.exit(1);
+    throw new Error('jwtPrivateKey is not defined.');
 }
-
 
 //Connection to mongoDB
 mongoose.connect('mongodb://localhost/vidly',
