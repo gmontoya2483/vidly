@@ -1,3 +1,4 @@
+const helmet = require('helmet');
 const error = require('../middleware/error.middleware');
 const express = require('express');
 const genres = require('../routes/genres.route');
@@ -8,6 +9,7 @@ const users = require('../routes/users.route');
 const auth = require('../routes/auth.route');
 
 module.exports = function(app) {
+    app.use(helmet());
     app.use(express.json());
     app.use('/api/genres', genres);
     app.use('/api/customers', customers);
